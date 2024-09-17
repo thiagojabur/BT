@@ -30,5 +30,13 @@ public class Node {
 		this.value = value;
 	}
     
+	public int degree() {
+		int degree = 0;
+		if (leftNode != null)
+			degree++;
+		if (rightNode != null)
+			degree++;
+		return degree;	
+	}
     
 }
