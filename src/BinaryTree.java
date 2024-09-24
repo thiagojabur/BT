@@ -39,6 +39,67 @@ public class BinaryTree {
 		printInOrder(this.root);
 	}
 	
+	public void printInternals() {
+		printInternals(this.root);
+	}
+	
+	public void printInternals(Node root) {
+		if (root == null)
+			return;
+		printInternals(root.getLeftNode());
+		if (isInternal(root))
+			System.out.println(root.value);
+		
+		printInternals(root.getRightNode());
+	}
+	
+	public boolean isFullBinaryTree() {
+		return isFullBinaryTree(this.root,0);
+	}
+	
+	public boolean isFullBinaryTree(Node root, int nivelAnterior) {
+		if (root == null)
+			return false;
+		int nivel;
+		nivel = depth(root);
+		if (isLeaf(root)) {
+			System.out.println(root.value);
+			System.out.println("NÃ­vel: " +nivel);	
+			if (nivel != nivelAnterior) {
+				System.out.println("niveis diferentes");
+				return false;	
+			}	
+		}
+		
+		if (nivel == nivelAnterior) {
+			System.out.println("Comparou " + nivel + " "+ nivelAnterior);
+			return isFullBinaryTree(root.getLeftNode(), nivel) && 	
+			 isFullBinaryTree(root.getRightNode(), nivel);
+			
+		} else 
+			return false;
+	}
+	
+	
+	public void printLeafs() {
+		printLeafs(this.root);
+	}
+	
+	
+	public void printLeafs(Node root) {
+		if (root == null)
+			return;
+		printLeafs(root.getLeftNode());
+		if (isLeaf(root)) {
+			System.out.println(root.value);
+			
+		}
+			
+		printLeafs(root.getRightNode());
+		
+		
+	}
+	
 	public void printInOrder(Node root) {
 		if (root == null)
 			return;
@@ -54,8 +115,9 @@ public class BinaryTree {
 	}
 	
 	
+	
 	public boolean isStrictBinaryTree(Node root) {
-		//condição de saída
+		//condiÃ§Ã£o de saÃ­da
 		if (root == null) return true;
 		
 		if (root.degree() == 1)	return false;
@@ -83,6 +145,11 @@ public class BinaryTree {
 	}
 
 	//profundidade
+	
+	public int depth(Node node) {
+		return depth(this, node);
+	}
+	
 	public int depth(BinaryTree T, Node node) {
 		if (node == root)
 			return 0;
@@ -102,7 +169,7 @@ public class BinaryTree {
 		if (root.getLeftNode() != null && root.getLeftNode().getValue() == value) return root;
 		if (root.getRightNode() != null && root.getRightNode().getValue() == value) return root;
 		
-		//chamar a função ela mesma 
+		//chamar a funÃ§Ã£o ela mesma 
 		if (value < root.getValue()) 
 			return getParent(element, root.getLeftNode());
 		else 
