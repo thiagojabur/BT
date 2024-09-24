@@ -3,11 +3,13 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		Node dois = new Node(2);
+		Node sete = new Node(7);
+		Node seis = new Node(6);
+		Node dois = new Node(2, seis, sete);
 		
 		Node cinco = new Node(5);
-		Node seis = new Node(6);
-		Node quatro = new Node(4, null, seis );
+		
+		Node quatro = new Node(4, null, null);
 		Node tres = new Node(3, null, quatro);
 		Node raiz = new Node(1, null, tres);
 		
@@ -23,6 +25,15 @@ public class Principal {
 		teste.printPreOrder();
 		
 		System.out.println(teste.isStrictBinaryTree());
+		
+		System.out.println("Folhas");
+		teste.printLeafs();
+		
+		System.out.println("Internos");
+		teste.printInternals();
+		
+		System.out.println("É full (cheia)?");
+		System.out.println(teste.isFullBinaryTree());
 	}
 
 }
