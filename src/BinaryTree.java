@@ -53,25 +53,33 @@ public class BinaryTree {
 		printInternals(root.getRightNode());
 	}
 	
+	private int calculateDepth(Node node) {
+	    if (node == null) {
+	        return 0;
+	    }
+	    // Calcula a profundidade da árvore
+	    return 1 + Math.max(calculateDepth(node.leftNode), calculateDepth(node.rightNode));
+	}
+	
 	public boolean isFullBinaryTree() {
-		return isFullBinaryTree(root,0,0);
+		 int depth = calculateDepth(root); // Calcula a profundidade máxima da árvore
+		 
+		 return isFullBinaryTree(root, depth, 0);
 	}
 	
 	
 	public boolean isFullBinaryTree(Node root, int d, int level) {
-		System.out.println("Checando " + root.value);
 		
 	    if (root == null)
 	      return true;
 
 	    // checa a presença de folhas 
 	    if (root.leftNode == null && root.rightNode == null) {
-	    	System.out.println("aqui2 " + level);
 	    	return (d == level + 1);
 	    }	
 
 	    if (root.leftNode == null || root.rightNode == null) {
-	      System.out.println("aqui");
+	      
 	      return false;
 	    }  
 
@@ -170,9 +178,9 @@ public class BinaryTree {
         }
 
         Node parent;
-        if((parent = getParent(subTree.getLeftNode(), node)) != null){
+        if((parent = getParent(subTree.getLeftNode(), node)) != null)
             return parent;
-        }
+        
 
         return getParent(subTree.getRightNode(), node);
     }
@@ -183,3 +191,4 @@ public class BinaryTree {
 		this.root = root;
 	}
 }
+
