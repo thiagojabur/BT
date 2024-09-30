@@ -3,11 +3,16 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		Node sete = new Node(7);
+		
+		
+		Node cinco = new Node(5);
+		Node oito = new Node(8);
+		Node nove = new Node(9);
+		Node sete = new Node(7, oito, nove);
 		Node seis = new Node(6);
 		Node dois = new Node(2, seis, sete);
 		
-		Node cinco = new Node(5);
+		
 		
 		Node quatro = new Node(4, null, null);
 		Node tres = new Node(3, null, quatro);
@@ -20,7 +25,8 @@ public class Principal {
 		
 		System.out.println(teste.isLeaf(raiz));
 		System.out.println(teste.isInternal(raiz));
-		//System.out.println(teste.getParent(dois).getValue());
+		System.out.println("Pai: " +teste.getParent(tres).getValue());
+		System.out.println("Nível: " +teste.depth(raiz));
 	    
 		teste.printPreOrder();
 		
@@ -34,6 +40,7 @@ public class Principal {
 		
 		System.out.println("É full (cheia)?");
 		System.out.println(teste.isFullBinaryTree());
+		teste.printPostOrder();
+	
 	}
-
 }
