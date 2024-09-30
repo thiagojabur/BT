@@ -54,30 +54,29 @@ public class BinaryTree {
 	}
 	
 	public boolean isFullBinaryTree() {
-		return isFullBinaryTree(this.root,0);
+		return isFullBinaryTree(root,0,0);
 	}
 	
-	public boolean isFullBinaryTree(Node root, int nivelAnterior) {
-		if (root == null)
-			return false;
-		int nivel;
-		nivel = depth(root);
-		if (isLeaf(root)) {
-			System.out.println(root.value);
-			System.out.println("Nível: " +nivel);	
-			if (nivel != nivelAnterior) {
-				System.out.println("niveis diferentes");
-				return false;	
-			}	
-		}
+	
+	public boolean isFullBinaryTree(Node root, int d, int level) {
+		System.out.println("Checando " + root.value);
 		
-		if (nivel == nivelAnterior) {
-			System.out.println("Comparou " + nivel + " "+ nivelAnterior);
-			return isFullBinaryTree(root.getLeftNode(), nivel) && 	
-			 isFullBinaryTree(root.getRightNode(), nivel);
-			
-		} else 
-			return false;
+	    if (root == null)
+	      return true;
+
+	    // checa a presença de folhas 
+	    if (root.leftNode == null && root.rightNode == null) {
+	    	System.out.println("aqui2 " + level);
+	    	return (d == level + 1);
+	    }	
+
+	    if (root.leftNode == null || root.rightNode == null) {
+	      System.out.println("aqui");
+	      return false;
+	    }  
+
+	    return isFullBinaryTree(root.leftNode, d, level + 1) && isFullBinaryTree(root.rightNode, d, level + 1);
+
 	}
 	
 	
@@ -92,12 +91,9 @@ public class BinaryTree {
 		printLeafs(root.getLeftNode());
 		if (isLeaf(root)) {
 			System.out.println(root.value);
-			
-		}
-			
-		printLeafs(root.getRightNode());
-		
-		
+			//System.out.println(" Nível: " + depth(root));
+		}			
+		printLeafs(root.getRightNode());	
 	}
 	
 	public void printInOrder(Node root) {
@@ -157,24 +153,30 @@ public class BinaryTree {
 			return 1 + depth(T, T.getParent(node));
 	}
 	
-	public Node getParent(Node element) {
-		return getParent(element, root);
+	public Node getParent(Node node) {
+        if (this.root == null || this.root == node) {
+            return null;
+        }
+        return getParent(this.root, node);
     }
 	
-	public Node getParent(Node element, Node root) {
-		
-		if (root==null) return null;
-		int value = element.getValue();
-		
-		if (root.getLeftNode() != null && root.getLeftNode().getValue() == value) return root;
-		if (root.getRightNode() != null && root.getRightNode().getValue() == value) return root;
-		
-		//chamar a função ela mesma 
-		if (value < root.getValue()) 
-			return getParent(element, root.getLeftNode());
-		else 
-			return getParent(element, root.getRightNode());
-	}
+	public Node getParent(Node subTree, Node node) {
+        if (subTree == null){
+            return null;
+        }
+
+        if (subTree.getLeftNode() == node || subTree.getRightNode() == node){
+            return subTree;
+        }
+
+        Node parent;
+        if((parent = getParent(subTree.getLeftNode(), node)) != null){
+            return parent;
+        }
+
+        return getParent(subTree.getRightNode(), node);
+    }
+	
 	
 	
 	public void setRoot(Node root) {
