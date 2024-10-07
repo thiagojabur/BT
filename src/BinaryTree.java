@@ -87,6 +87,92 @@ public class BinaryTree {
 
 	}
 	
+	public void insertNode(Node newNode) {
+		insertNode(root,newNode);
+	}	
+	
+	public void deleteNode(Node toDelete) {
+		if (toDelete == root) {
+			System.out.println("Apagando a raiz");
+		}
+		//verificar os casos
+		//toDelete não possui nenhum filho
+		if (toDelete.leftNode == null && toDelete.rightNode == null) {
+			System.out.println("Nenhum filho");
+			
+			//saber se o toDelete está a esq ou dir
+			Node parent = getParent(toDelete); 
+			if (parent.leftNode == toDelete )
+				parent.leftNode = null;
+			else 
+				parent.rightNode = null;
+			
+			System.out.println("Nó removido: " + toDelete.value);
+			return;
+		}
+		//toDelete possui apenas um filho
+		if (toDelete.leftNode == null && toDelete.rightNode != null) {
+			System.out.println("Apenas um filho e na direita cujo valor é " + toDelete.rightNode.value);	
+			Node parent = getParent(toDelete); 
+			
+			//verificar se o toDelete está a esq ou a direita em relacao ao parent
+			if (parent.leftNode == toDelete )
+				parent.leftNode = toDelete.rightNode;
+			else 
+				parent.rightNode = toDelete.rightNode;
+			
+			System.out.println("Nó removido: " + toDelete.value);
+			
+			return;
+		}
+			else if (toDelete.leftNode != null && toDelete.rightNode == null){
+			System.out.println("Apenas um filho e na esquerda cujo valor é " + toDelete.leftNode.value);
+			Node parent = getParent(toDelete); 
+			
+			//verificar se o toDelete está a esq ou a direita em relacao ao parent
+			if (parent.leftNode == toDelete )
+				parent.leftNode = toDelete.leftNode;
+			else 
+				parent.rightNode = toDelete.leftNode;
+				
+			System.out.println("Nó removido: " + toDelete.value);
+			
+			
+			
+			
+		
+		} else 
+		{
+			System.out.println("Tem dois filhos");
+		}
+		
+		
+		//toDelete possui dois filhos
+
+	}
+	
+	
+	public Node insertNode(Node root, Node newNode) {
+		//insere novo nó na folha a partir de 
+		//comparacoes
+		if (root == null) {
+			return newNode;
+		}
+		
+		if (root.value == newNode.value)
+            return root;
+		
+		if (newNode.value < root.value) {
+			//insere na esquerda
+			root.setLeftNode(insertNode(root.leftNode,newNode)); 
+		} else {
+			//insere na direita
+			root.setRightNode(insertNode(root.rightNode,newNode)); 
+			 
+		}
+		return root;
+			
+	}
 	
 	public void printLeafs() {
 		printLeafs(this.root);
@@ -191,4 +277,3 @@ public class BinaryTree {
 		this.root = root;
 	}
 }
-
